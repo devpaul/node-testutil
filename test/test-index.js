@@ -10,7 +10,8 @@ exports['is module correctly constructed'] = function(test) {
     test.ok(unit.settings.testFileMatch);
     test.ok(unit.settings.rootTestFolder);
     test.ok(unit.settings.rootSrcFolder);
-    test.ok(unit.recursivelyMixinTests);
+    test.ok(unit.includeTestFolder);
+    test.ok(unit.includeTests);
     test.ok(unit.mixinTest);
     test.ok(unit.isTestFile);
     test.ok(unit.mapToSourceDir);
@@ -18,4 +19,4 @@ exports['is module correctly constructed'] = function(test) {
     test.ok(unit.requireUnit);
     test.ok(unit.parameterize);
     test.done();
-}
+};
