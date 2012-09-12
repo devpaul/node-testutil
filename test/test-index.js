@@ -1,22 +1,16 @@
-var unit = testutil.requireUnit(module.filename);
+var unit = requireUnit(module.filename);
 
 exports['is module correctly constructed'] = function(test) {
     test.ok(unit);
-    test.ok(unit.mocks);
-    test.ok(unit.mocks.MockExpressResponse);
-    test.ok(unit.mocks.MockExpressServer);
-    test.ok(unit.settings);
-    test.strictEqual(unit.settings.verbose, false);
-    test.ok(unit.settings.testFileMatch);
-    test.ok(unit.settings.rootTestFolder);
-    test.ok(unit.settings.rootSrcFolder);
-    test.ok(unit.includeTestFolder);
-    test.ok(unit.includeTests);
-    test.ok(unit.mixinTest);
-    test.ok(unit.isTestFile);
-    test.ok(unit.mapToSourceDir);
-    test.ok(unit.mapToSourceFile);
-    test.ok(unit.requireUnit);
+    test.ok(unit.MockFunction);
+    test.ok(unit.config);
+    test.ok(unit.TestGroup);
+    test.ok(unit.groups);
     test.ok(unit.parameterize);
+    test.ok(unit.requireUnit);
+    test.ok(unit.includeTests);
+    test.ok(unit.setSrcFolder);
+    test.ok(unit.anyInt);
+    test.ok(unit.anyString);
     test.done();
 };
