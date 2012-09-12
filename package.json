@@ -10,8 +10,7 @@
     "dependencies" : {
     },
     "devDependencies" : {
-        "nodeunit" : ">= 0.6.4",
-        "sandboxed-module" : "*"
+        "nodeunit" : ">= 0.6.4"
     },
     "engine" : {
         "node" : ">=0.8"
