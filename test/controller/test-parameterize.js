@@ -28,3 +28,24 @@ exports['creates tests equal to number of data items'] = function(test) {
     assertNaming(length, suite);
     test.done();
 }
+
+var DATA = [
+    [1],
+    [2],
+    [3]
+];
+var expectedCntForFirst = 0;
+var expectedCntForSecond = 0;
+exports['can use same data set twice'] = {
+    "first pass" : parameterize(DATA, function(test, data) {
+        expectedCntForFirst++;
+        test.equal(expectedCntForFirst, data);
+        test.done();
+    }),
+    "second pass" : parameterize(DATA, function(test, data) {
+        expectedCntForSecond++;
+        test.equal(expectedCntForSecond, data);
+        test.done();
+    })
+}
+
