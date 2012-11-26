@@ -12,5 +12,6 @@ exports['is module correctly constructed'] = function(test) {
     test.ok(unit.setSrcFolder)
     test.ok(unit.anyInt)
     test.ok(unit.anyString)
+    test.ok(unit.findFolder)
     test.done()
 }
