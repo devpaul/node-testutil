@@ -1,0 +1,1 @@
+these folders are assets for testing findFolder
