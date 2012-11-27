@@ -5,7 +5,6 @@ var TestGroup = requireUnit(module.filename)
 exports['TestData has expected properties'] = function(test) {
     test.ok(TestGroup)
     test.ok(TestGroup.prototype.useFilename)
-    test.ok(TestGroup.prototype.useFilename)
     test.done()
 }
 
