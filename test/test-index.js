@@ -7,6 +7,7 @@ exports['is module correctly constructed'] = function(test) {
     test.ok(unit.TestGroup)
     test.ok(unit.parameterize)
     test.ok(unit.requireUnit)
+    test.ok(unit.requireSrc)
     test.ok(unit.includeTests)
     test.ok(unit.setSrcFolder)
     test.ok(unit.anyInt)
