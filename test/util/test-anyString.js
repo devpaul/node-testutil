@@ -1,4 +1,4 @@
-var anyString = requireUnit(module.filename)
+var anyString = requireUnit(__filename)
 
 exports['generates string of random length'] = function(test) {
     var str = anyString()

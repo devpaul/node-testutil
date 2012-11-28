@@ -1,6 +1,11 @@
 var findFolder = requireUnit(__filename)
   , path = require('path')
-  , DEFAULTFS = path.resolve('./test-assets/includeTestDefaultBehavior')
+  , TESTFOLDERBASE = path.resolve('./test-assets/findFolder')
+  , DEFAULTFS = path.join(TESTFOLDERBASE, 'mockSrcStructure')
+  , FOLDERDATA = [ ['mockSrcStructure', 'mockSrcStructure/test', ['src', 'test']]
+                 , ['mockLibStructure', 'mockLibStructure/test', ['lib', 'test']]
+                 , ['mockTestUnitStructure', 'mockTestUnitStructure/test/unit', ['lib', 'test']]
+                 ]
 
 exports['is correctly constructed'] = function(test) {
     test.ok(findFolder)
@@ -32,11 +37,12 @@ exports['findFolder']['missing folder parameter'] = function(test) {
     test.done()
 }
 
-exports['findFolder'].folderAndSignature['returns folder matching signature'] = function(test) {
-    var origin = path.join(DEFAULTFS, "src/folder/mocktest.js")
-      , signature = ['src', 'test']
-      , result
-    test.equals(DEFAULTFS, findFolder(origin, signature))
+exports['findFolder'].folderAndSignature['returns folder matching signature'] = testutil.parameterize(FOLDERDATA, paramFindFolder)
+
+function paramFindFolder(test, expected, testFolder, signature) {
+    expected = path.join(TESTFOLDERBASE, expected)
+    testFolder = path.join(TESTFOLDERBASE, testFolder)
+    test.equals(expected, findFolder(testFolder, signature))
     test.done()
 }
 
@@ -52,6 +58,15 @@ exports['findFolder'].folderAndSignature['throws when match not found'] = functi
 exports['findFolder'].folderAndSignature['empty signature returns folder'] = function(test) {
     var signature = []
     test.equals(DEFAULTFS, findFolder(DEFAULTFS, signature))
+    test.done()
+}
+
+exports['findFolder'].folderAndSignature['invalid relative folder path'] = function(test) {
+    var folder = 'mockTestUnitStructure/test/unit'
+      , signature = [testutil.anyString()]
+    test.throws(function() {
+        findFolder(folder, signature)
+    })
     test.done()
 }
 

@@ -14,8 +14,6 @@ testutil.includeTests(path.dirname(module.filename), module.exports, testGroup)
  */
 function createTestGroup() {
     var TestGroup = testutil.TestGroup
-    return new TestGroup("testunit tests"
-                        , /(^test-)/
-                        , /(test)(?=\/|$)/
+    return new TestGroup( "test"
                         , "lib")
 }

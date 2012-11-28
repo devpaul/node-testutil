@@ -1,6 +1,6 @@
 var TestGroup = requireUnit(module.filename)
-  , createTestGroupSuite = require('./createTestGroupSuite.js')
-  , data = createTestGroupData()
+  , path = require('path')
+  , TestGroupUtil = require('./TestGroupUtil.js')
 
 exports['TestData has expected properties'] = function(test) {
     test.ok(TestGroup)
@@ -8,25 +8,30 @@ exports['TestData has expected properties'] = function(test) {
     test.done()
 }
 
-createTestGroupSuite(data, exports)
-
-function generateRandomMapTest() {
-    var dir = testutil.anyString()
-    var file = testutil.anyString()
-    var original = dir + "/test/" + dir + "/test-" + file + ".js"
-    var expected = dir + "/src/" + dir + "/" + file + ".js"
-    return [original, expected]
-}
+TestGroupUtil.testTestGroup(createTestGroupData(), exports)
+exports['isATest'] = TestGroupUtil.parameterizeIsATest(createIsATestData())
+exports['mapToUnit'] = TestGroupUtil.parameterizeMapToUnit(createMapToUnitTestData())
 
 function createTestGroupData() {
-    var name = testutil.anyString()
-      , srcFolder = 'src'
-      , testGroup = new TestGroup(name, /(^test-)/, /(test)(?=\/|$)/, srcFolder)
-      , mapToUnitData = [ ["/some/folders/test/com/devpaul/test-file.js", "/some/folders/src/com/devpaul/file.js"]
-                        , ["./test-file.js", "file.js"]
-                        , generateRandomMapTest()
-                        ]
+    var Data = TestGroupUtil.testTestGroup.Data
+    var srcFolder = 'src'
+      , testFolder = 'test'
+      , testFileRegex = /(^test-)/
+      , testGroup = new TestGroup(testFolder, srcFolder, testFileRegex)
 
-    return createTestGroupSuite.Data(testGroup, name, srcFolder
-                                    , "test-" + testutil.anyString, testutil.anyString, mapToUnitData)
+    return new Data(testGroup, testFolder, srcFolder, testFileRegex)
+}
+
+function createIsATestData() {
+    var testGroup = new TestGroup('test', 'src')
+    return [ [testGroup, 'test-pants.js', true]
+           , [testGroup, 'notatest.js', false]
+           ]
+}
+
+function createMapToUnitTestData() {
+    var testGroup = new TestGroup('test', 'src')
+    return [ [testGroup, 'test/test-test.js', path.join(path.resolve('src'), 'test.js')]
+           , [testGroup, path.join(path.resolve('test'), 'notatest.js'), path.join(path.resolve('src'), 'notatest.js')]
+           ]
 }

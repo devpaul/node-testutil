@@ -1,7 +1,14 @@
-var unit = requireUnit(module.filename)
+var unit = requireUnit(__filename)
   , path = require('path')
+  , DEFAULTFS = path.resolve('./test-assets/includeTestDefaultBehavior')
+  , testGroup = createTestGroup(DEFAULTFS)
 
-var DEFAULTFS = path.resolve('./test-assets/includeTestDefaultBehavior')
+function createTestGroup(base) {
+    var TestGroup = testutil.TestGroup
+      , testFolder = path.join(base, 'test')
+      , srcFolder = path.join(base, 'src')
+      return new TestGroup(testFolder, srcFolder)
+}
 
 exports['is correctly constructed'] = function(test) {
     test.ok(unit)
@@ -9,14 +16,14 @@ exports['is correctly constructed'] = function(test) {
 }
 
 exports['requireUnit requires mappedUnit'] = function(test) {
-    var mod = unit(DEFAULTFS + '/test/test-mocktest.js')
+    var mod = unit(DEFAULTFS + '/test/test-mocktest.js', undefined, testGroup)
     test.ok(mod)
     test.equals("mocktest", mod.name)
     test.done()
 }
 
 exports['requireUnit filename provided - uses filename'] = function(test) {
-    var mod = unit(DEFAULTFS + '/test/config/test-mockconfig.json.js', 'mockconfig.json')
+    var mod = unit(DEFAULTFS + '/test/config/test-mockconfig.json.js', 'mockconfig.json', testGroup)
     test.ok(mod)
     test.equals("mockconfig", mod.name)
     test.done()
