@@ -1,6 +1,6 @@
 {
     "name" : "testutil",
-    "version" : "0.1.1",
+    "version" : "0.1.2",
     "author" : "Paul Shannon",
     "description" : "test utilities for node",
     "main" : "./lib/index.js",
